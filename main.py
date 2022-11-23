@@ -7,6 +7,9 @@ import keyboard
 
 timeentry_id = 0
 
+data = requests.get('https://api.track.toggl.com/api/v9/me/projects', headers={'content-type': 'application/json', 'Authorization' : 'Basic %s' %  b64encode(b"1310a3434a655a92cb5cd3d26f9b4704:api_token").decode("ascii")})
+print(data.json())
+
 def start_tracking():
     now = datetime.utcnow()
     # RFC 3339 required (add Z)
@@ -14,7 +17,7 @@ def start_tracking():
     # negative UNIX timestamp
     unixtime = int(-time.time())
     data = requests.post('https://api.track.toggl.com/api/v9/workspaces/4005441/time_entries',
-                         json={"created_with": "python", "pid": 157781596, "workspace_id": 4005441,
+                         json={"created_with": "python", "pid": 177493677 , "workspace_id": 4005441,
                                "start": utctime, "user_id": 5446534, "duration": unixtime},
                          headers={'content-type': 'application/json',
                                   'Authorization': 'Basic %s' % b64encode(
@@ -28,6 +31,16 @@ def end_tracking():
         headers={'content-type': 'application/json', 'Authorization': 'Basic %s' % b64encode(
         b"1310a3434a655a92cb5cd3d26f9b4704:api_token").decode("ascii")})
 
+def started():
+    start_tracking()
+    keyboard.remove_hotkey("F1")
+    keyboard.add_hotkey("F1", ended)
 
-if keyboard.add_hotkey("F1", start_tracking):
-    keyboard.add_hotkey("F2", end_tracking)
+def ended():
+    end_tracking()
+    keyboard.remove_hotkey("F1")
+    keyboard.add_hotkey("F1", started)
+
+#Hotkey
+
+keyboard.add_hotkey("F1", started)

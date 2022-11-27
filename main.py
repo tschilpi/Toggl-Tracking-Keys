@@ -45,7 +45,7 @@ def ended(project_id,hotkey):
     keyboard.remove_hotkey(hotkey)
     keyboard.add_hotkey(hotkey, started, args=([project_id,hotkey]))
 
-#Hotkey
+#Hotkeys
 
 t1 = Thread(target=keyboard.add_hotkey("F1", started, args=([Mathematics,"F1"])))
 t2 = Thread(target=keyboard.add_hotkey("F2", started, args=([CS50,"F2"])))

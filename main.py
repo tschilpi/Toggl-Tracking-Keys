@@ -4,6 +4,7 @@ import json
 from datetime import datetime
 import time
 import keyboard
+from threading import Thread
 
 timeentry_id = 0
 CS50 = 157781596
@@ -34,16 +35,19 @@ def end_tracking():
         headers={'content-type': 'application/json', 'Authorization': 'Basic %s' % b64encode(
         b"1310a3434a655a92cb5cd3d26f9b4704:api_token").decode("ascii")})
 
-def started(project_id):
+def started(project_id,hotkey):
     start_tracking(project_id)
-    keyboard.remove_hotkey("F1")
-    keyboard.add_hotkey("F1", ended, args=([project_id]))
+    keyboard.remove_hotkey(hotkey)
+    keyboard.add_hotkey(hotkey, ended, args=([project_id,hotkey]))
 
-def ended(project_id):
+def ended(project_id,hotkey):
     end_tracking()
-    keyboard.remove_hotkey("F1")
-    keyboard.add_hotkey("F1", started, args=([project_id]))
+    keyboard.remove_hotkey(hotkey)
+    keyboard.add_hotkey(hotkey, started, args=([project_id,hotkey]))
 
 #Hotkey
 
-keyboard.add_hotkey("F1", started, args=([Mathematics]))
+t1 = Thread(target=keyboard.add_hotkey("F1", started, args=([Mathematics,"F1"])))
+t2 = Thread(target=keyboard.add_hotkey("F2", started, args=([CS50,"F2"])))
+t3 = Thread(target=keyboard.add_hotkey("F3", started, args=([Real_Analysis,"F3"])))
+

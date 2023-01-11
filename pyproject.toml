@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "toggl-tracking-keys"
+version = "0.1.0"
+description = ""
+authors = ["Marios Vettas <“marios.vettas@bluewin.ch”>"]
+readme = "README.md"
+packages = [{include = "toggl_tracking_keys"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.28.1"
+keyboard = "^0.13.5"
+chime = "^0.5.3"
+pywin32 = "^305"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

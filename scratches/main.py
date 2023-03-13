@@ -6,6 +6,10 @@ import time
 import keyboard
 from threading import Thread
 import chime
+import threading
+import sys, os
+import win32gui
+import win32.lib.win32con as win32con
 
 #toggl time entry globally declared
 #project id's of the hotkeys
@@ -14,9 +18,13 @@ CS50 = 157781596
 Mathematics = 165785237
 Real_Analysis = 186010611
 
+global dead
+dead = False
+
 #Get user data
 data = requests.get('https://api.track.toggl.com/api/v9/me/projects', headers={'content-type': 'application/json', 'Authorization' : 'Basic %s' %  b64encode(b"1310a3434a655a92cb5cd3d26f9b4704:api_token").decode("ascii")})
 print(data.json())
+enddata = data.json()
 
 #Function to start tracking
 #Input for toggl's API (time_entries endpoint): check out official API's documentation to refers to how to set values (start, duration, etc.)
@@ -50,9 +58,29 @@ def end_tracking(timeentry_id, project_id, hotkey):
     chime.success()
     keyboard.add_hotkey(hotkey, start_tracking, args=([project_id, hotkey]))
 
+hotkey_thread = None
+stop_flag = threading.Event()
+
 #Hotkey event started separately, in parallel, with threads
 
-t1 = Thread(target=keyboard.add_hotkey("F1", start_tracking, args=([Mathematics,"F1"])))
-t2 = Thread(target=keyboard.add_hotkey("F2", start_tracking, args=([CS50,"F2"])))
-t3 = Thread(target=keyboard.add_hotkey("F3", start_tracking, args=([Real_Analysis,"F3"])))
+def hotkey_tracking(hotkey1, hotkey2, hotkey3, project1_id, project2_id, project3_id):
 
+    global hotkey_thread
+    global stop_flag
+
+    if hotkey_thread is None:
+        hotkey_thread = threading.Thread(target=keyboard.add_hotkey(hotkey1, start_tracking, args=([project1_id,hotkey1])))
+
+    else:
+        stop_flag.set()
+        hotkey_thread.join()
+        hotkey_thread = None
+        stop_flag.clear()
+
+    # t2 = Thread(target=keyboard.add_hotkey(hotkey2, start_tracking, args=([project2_id,hotkey2])))
+    # t3 = Thread(target=keyboard.add_hotkey(hotkey3, start_tracking, args=([project3_id,hotkey3])))
+
+# the_program_to_hide = win32gui.GetForegroundWindow()
+# win32gui.ShowWindow(the_program_to_hide , win32con.SW_HIDE)
+
+input()

@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "toggl_tracking_keys"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.9.16"
 requests = "^2.28.1"
 keyboard = "^0.13.5"
 chime = "^0.5.3"

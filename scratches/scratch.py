@@ -74,9 +74,3 @@ def main():
             one_hotkey = my_dict[key].capitalize()
             return(one_hotkey)
 
-
-    # gg
-    #
-    # time.sleep(2)
-
-#hotkeys_finalversion.execute_hotkeys(fset)

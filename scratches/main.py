@@ -8,8 +8,8 @@ from threading import Thread
 import chime
 import threading
 import sys, os
-import win32gui
-import win32.lib.win32con as win32con
+#import win32gui
+#import win32.lib.win32con as win32con
 
 #toggl time entry globally declared
 #project id's of the hotkeys

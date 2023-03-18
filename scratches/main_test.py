@@ -8,8 +8,8 @@ from threading import Thread
 import chime
 import threading
 import sys, os
-import win32gui
-import win32.lib.win32con as win32con
+#import win32gui
+#import win32.lib.win32con as win32con
 from pynput import keyboard as pynputkeys
 import config
 import streamlit as st

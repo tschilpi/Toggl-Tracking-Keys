@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["Marios Vettas <“marios.vettas@bluewin.ch”>"]
 readme = "README.md"
-packages = [{include = "toggl_tracking_keys"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"

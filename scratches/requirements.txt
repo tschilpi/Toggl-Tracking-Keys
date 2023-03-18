@@ -1,0 +1,13 @@
+requirements du neger
+
+streamlit
+requests
+json
+chime
+pynput
+
+ich glaub die sind schon in der standard library:
+
+base64
+subprocess
+sys, os

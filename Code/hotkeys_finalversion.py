@@ -4,16 +4,16 @@ import config
 from functools import partial
 import time
 
-def execute_hotkeys(hotkeylist, bytestring):
-    def function_1(project_value, bytestring):
+def execute_hotkeys(hotkeylist):
+    def function_1(project_value):
         """ One of your functions to be executed by a combination """
         if not config.tracking1:
-            main_test.start_tracking(project_value, bytestring)
+            main_test.start_tracking(project_value)
             config.tracking1 = True
             print('Started tracking.')
 
         else:
-            main_test.end_tracking(config.time_entry, bytestring)
+            main_test.end_tracking(config.time_entry)
             config.tracking1 = False
             print('Ended tracking.')
 
@@ -53,7 +53,7 @@ def execute_hotkeys(hotkeylist, bytestring):
 
     print(hotkeylist)
     for i, tuple in enumerate(hotkeylist):
-        combination_to_function[tuple[0]] = partial(function_1, tuple[1], bytestring)
+        combination_to_function[tuple[0]] = partial(function_1, tuple[1])
 
 
     # The currently pressed keys (initially empty)

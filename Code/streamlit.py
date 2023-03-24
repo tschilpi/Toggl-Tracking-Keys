@@ -14,32 +14,18 @@ if 'submit_check' not in st.session_state:
     st.session_state.submit_check = False
 
 if 'enddata' not in st.session_state:
-    st.session_state.enddata = None
+    results = main_test.fetch_user_data()
+    if results is None:
+        st.error('Could not fetch API data.', icon="🚨")
+    else:
+        st.session_state.enddata = results
 
-if 'byte_string' not in st.session_state:
-    st.session_state.byte_string = None
+
 
 st.title('Global Hotkeys for Toggl :sunglasses:')
 st.write('')
 st.write('')
 
-placeholder = st.empty()
-
-# 1. first page of streamlit: user authentication for toggl
-# if successful, remove form and start main program
-
-if st.session_state.enddata is None:
-    with placeholder.form('test', clear_on_submit=True):
-        input = st.text_input('Please input your API key.', key=10)
-        submitted = st.form_submit_button(disabled=st.session_state.submit_check)
-        if submitted:
-            config.API_KEY = input
-            config.byte_string = bytes(config.API_KEY + ':api_token', encoding='ascii')
-            st.session_state.byte_string = config.byte_string
-            main_test.fetch_user_data()
-            st.session_state.enddata = config.enddata
-            if config.enddata is not None:
-                placeholder.empty()
 
 def main(enddata):
     if 'check' not in st.session_state:
@@ -125,7 +111,7 @@ def main(enddata):
                 print('3')
                 hotkeylist.append((st.session_state.hotkey_value3, st.session_state.project_value3))
 
-            listener = hotkeys_finalversion.execute_hotkeys(hotkeylist, config.byte_string)
+            listener = hotkeys_finalversion.execute_hotkeys(hotkeylist)
             st.session_state.listener = listener
 
 

@@ -1,18 +1,12 @@
-from base64 import b64encode
 from datetime import datetime
 import time
 import requests
 import json
-import keyboard
-from threading import Thread
 import chime
-import threading
-import sys, os
+import config
 #import win32gui
 #import win32.lib.win32con as win32con
-from pynput import keyboard as pynputkeys
-import config
-import os
+
 
 #Get user data
 def fetch_user_data():
@@ -22,7 +16,9 @@ def fetch_user_data():
         if data.status_code != 200:
             return None
         else:
-            return(data.json())
+            api_data = data.json()
+            config.workspace_id = api_data[0]['workspace_id']
+            return(api_data)
 
 #Function to start tracking
 #Input for toggl's API (time_entries endpoint): check out official API's documentation to refers to how to set values (start, duration, etc.)
@@ -32,9 +28,10 @@ def start_tracking(project_id):
     utctime = now.isoformat() + "Z"
     # negative UNIX timestamp
     unixtime = int(-time.time())
-    data = requests.post('https://api.track.toggl.com/api/v9/workspaces/4005441/time_entries',
-                         json={"created_with": "python", "pid": project_id, "workspace_id": 4005441,
-                               "start": utctime, "user_id": 5446534, "duration": unixtime},
+    print(config.workspace_id)
+    data = requests.post(f'https://api.track.toggl.com/api/v9/workspaces/{config.workspace_id}/time_entries',
+                         json={"created_with": "python", "pid": project_id, "workspace_id": config.workspace_id,
+                               "start": utctime, "duration": unixtime},
                          headers = {'content-type': 'application/json', 'Authorization': f'Basic {config.api_usage}'})
     b = json.loads(data.content)
     timeentry_id = b['id']
@@ -45,7 +42,7 @@ def start_tracking(project_id):
 #Function to end tracking
 #Refer to readme.txt to learn more about the event loop and how hotkeys are triggered
 def end_tracking(timeentry_id):
-    data = requests.patch(f'https://api.track.toggl.com/api/v9/workspaces/4005441/time_entries/{timeentry_id}/stop',
+    data = requests.patch(f'https://api.track.toggl.com/api/v9/workspaces/{config.workspace_id}/time_entries/{timeentry_id}/stop',
     headers={'content-type': 'application/json', 'Authorization': f'Basic {config.api_usage}'})
 
     chime.success()

@@ -9,10 +9,7 @@ strange behavior for keys:
  numpad keys have duality in vks, sometimes their vk is the numpad key, other times its insert/home etc.
 
 
-several bugs:
+bugs:
 
-    - sometimes, if you switch between hotkeys without ending them properly first, hotkeys are switched and messages are printed twice
-    - Bluetooth starting and stopping bug
-    - Key error with pressed_vks.remove(vk)
-    - sometimes pressing a different key from the hotkeys triggers them still
+-
 

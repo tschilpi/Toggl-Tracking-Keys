@@ -3,6 +3,7 @@ from unittest.mock import Mock, patch
 import main_test
 import json
 import requests
+import record_hotkeys
 
 # mocktests
 class TestFetchUserData(unittest.TestCase):
@@ -40,3 +41,7 @@ class TestFetchUserData(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class TestMain(unittest.TestCase):
+    a = scratch.main()

@@ -4,43 +4,17 @@ import config
 from functools import partial
 import time
 
-def execute_hotkeys(hotkeylist, bytestring):
-    def function_1(project_value, bytestring):
+## Code used from this website: https://nitratine.net/blog/post/how-to-make-hotkeys-in-python/?utm_source=pocket_saves
+## Code has been altered to fit the needs of this application
+
+def execute_hotkeys(hotkeylist):
+    def function_1(project_value):
         """ One of your functions to be executed by a combination """
         if not config.tracking1:
-            main_test.start_tracking(project_value, bytestring)
+            main_test.start_tracking(project_value)
             config.tracking1 = True
             print('Started tracking.')
 
-        else:
-            main_test.end_tracking(config.time_entry, bytestring)
-            config.tracking1 = False
-            print('Ended tracking.')
-
-
-
-
-    def function_2(project_value, bytestring):
-        """ Another one of your functions to be executed by a combination """
-
-        if not config.tracking1:
-            main_test.start_tracking(project_value, bytestring)
-            config.tracking1 = True
-            print('Started tracking.')
-
-        else:
-            main_test.end_tracking(config.time_entry, bytestring)
-            config.tracking1 = False
-            print('Ended tracking.')
-
-
-    def function_3():
-        """ Another one of your functions to be executed by a combination """
-
-        if not config.tracking1:
-            main_test.start_tracking([2][1])
-            config.tracking1 = True
-            print('Started tracking.')
         else:
             main_test.end_tracking(config.time_entry)
             config.tracking1 = False
@@ -53,7 +27,7 @@ def execute_hotkeys(hotkeylist, bytestring):
 
     print(hotkeylist)
     for i, tuple in enumerate(hotkeylist):
-        combination_to_function[tuple[0]] = partial(function_1, tuple[1], bytestring)
+        combination_to_function[tuple[0]] = partial(function_1, tuple[1])
 
 
     # The currently pressed keys (initially empty)

@@ -1,5 +1,5 @@
 from pynput import keyboard
-import hotkeys_finalversion
+import check_hotkeys
 import time
 import re
 
@@ -73,4 +73,3 @@ def main():
         for key in COMBINATIONS[0]:
             one_hotkey = my_dict[key].capitalize()
             return(one_hotkey)
-

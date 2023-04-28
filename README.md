@@ -1,7 +1,7 @@
 # **Global Hotkeys for Toggl**
 
 This application allows users to set global hotkeys for the Toggl time tracking service, making it easy to start and stop projects using custom key combinations.
-The app can be executed by running Code\run_program.py. It will run via localhost.
+The app can be executed by running run_program.py. It will run via localhost.
 
 **Application structure:**
 1.     streamlit.py is responsible for managing the main application logic, rendering the user interface, and handling user interactions using Streamlit.
